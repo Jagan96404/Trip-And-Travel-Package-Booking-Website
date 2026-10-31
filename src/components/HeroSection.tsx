@@ -14,10 +14,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onPlanTrip,
 }) => {
   const heroBackgrounds = [
-    'https://images.unsplash.com/photo-1598091383021-15ddea10925d?q=80&w=2000&auto=format&fit=crop', // Kashmir Shikara
-    'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=2000&auto=format&fit=crop', // Taj Mahal
-    'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2000&auto=format&fit=crop', // Munnar Kerala
-    'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=2000&auto=format&fit=crop', // Ladakh Pangong
+    './images/destinations/kashmir.jpg',
+    './images/destinations/agra.jpg',
+    './images/destinations/munnar.jpg',
+    './images/destinations/ladakh.jpg',
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -35,9 +35,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {heroBackgrounds.map((bg, idx) => (
         <div
           key={bg}
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-            idx === currentSlide ? 'opacity-10' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${idx === currentSlide ? 'opacity-10' : 'opacity-0'
+            }`}
           style={{ backgroundImage: `url(${bg})` }}
         />
       ))}

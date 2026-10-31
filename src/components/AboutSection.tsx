@@ -10,7 +10,7 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-luxury">
               <img
-                src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?q=80&w=1200&auto=format&fit=crop"
+                src="./images/destinations/kashmir.jpg"
                 alt="Marvel Holidays Experiential Travel"
                 className="w-full h-[460px] object-cover"
               />
