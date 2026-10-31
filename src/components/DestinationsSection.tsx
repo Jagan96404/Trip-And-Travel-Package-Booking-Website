@@ -29,40 +29,35 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
   });
 
   return (
-    <section id="destinations" className="py-24 relative overflow-hidden bg-navy-950">
-      {/* Decorative ambient gradients */}
-      <div className="absolute top-1/4 -left-32 w-80 h-80 bg-turquoise-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-gold-500/10 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="destinations" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-900/90 border border-turquoise-500/40 text-xs text-turquoise-400 font-semibold uppercase tracking-wider mb-4">
-            <Compass className="w-3.5 h-3.5" />
-            <span>Curated Pan-India Portfolio</span>
-          </div>
+          <span className="text-xs font-bold font-serif uppercase tracking-widest text-brand-gold block mb-2">
+            Pan-India Travel Portfolio
+          </span>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">
-            Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-400 to-gold-500">Incredible India</span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
+            Explore Incredible India
           </h2>
 
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            From the snow-clad peaks of Kashmir to the palm lagoons of Kerala, explore 27 iconic handpicked destinations featuring authentic travel photography, transparent pricing, and personalized itineraries.
+          <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+            From the snow-clad peaks of Kashmir to the tranquil backwaters of Kerala, explore 27 iconic destinations featuring authentic real travel photography, transparent pricing, and personalized itineraries.
           </p>
         </div>
 
         {/* Region Filter Tabs & Search Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
           {/* Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-navy-900/80 border border-slate-800">
+          <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200">
             {regions.map((region) => (
               <button
                 key={region}
                 onClick={() => setActiveRegion(region)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 ${
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-serif font-bold transition-all duration-200 ${
                   activeRegion === region
-                    ? 'bg-gradient-to-r from-turquoise-500 to-cyan-400 text-navy-950 shadow-md font-bold'
-                    : 'text-slate-400 hover:text-white hover:bg-navy-800/60'
+                    ? 'bg-black text-white shadow-sm'
+                    : 'text-gray-700 hover:text-black hover:bg-white'
                 }`}
               >
                 {region}
@@ -72,13 +67,13 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
 
           {/* Search Input */}
           <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search destination, state..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-navy-900/80 border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-turquoise-400 transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-black placeholder-gray-500 focus:outline-none focus:border-black transition-colors"
             />
           </div>
         </div>
@@ -88,7 +83,7 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
           {filteredDestinations.map((dest) => (
             <div
               key={dest.id}
-              className="group glass-card rounded-2xl overflow-hidden border border-slate-800/90 glass-card-hover flex flex-col"
+              className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-luxury white-card-hover flex flex-col"
             >
               {/* Image Container */}
               <div className="relative h-56 overflow-hidden">
@@ -96,25 +91,25 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
                   src={dest.image}
                   alt={dest.name}
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
                 {/* Region Tag */}
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-navy-950/80 backdrop-blur-md border border-slate-700 text-[11px] font-semibold text-turquoise-300">
+                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/90 text-white font-serif font-bold text-[11px]">
                   {dest.region}
                 </span>
 
                 {/* State Tag */}
-                <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-navy-950/80 backdrop-blur-md border border-slate-700 text-[11px] text-slate-300 flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-gold-400" />
+                <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/95 text-black font-bold text-[11px] flex items-center gap-1 shadow-sm">
+                  <MapPin className="w-3 h-3 text-brand-gold" />
                   {dest.state}
                 </span>
 
                 {/* Starting Price Pill */}
-                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-navy-900/90 backdrop-blur-md border border-gold-500/40 text-right">
-                  <span className="text-[10px] text-slate-400 block leading-none">Starting From</span>
-                  <span className="font-serif text-base font-extrabold text-gold-400">
+                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200 text-right shadow-sm">
+                  <span className="text-[10px] text-gray-500 block leading-none font-semibold">Starting From</span>
+                  <span className="font-serif text-base font-bold text-black">
                     ₹{dest.startingPrice.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -123,25 +118,25 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
               {/* Card Body */}
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-white group-hover:text-turquoise-300 transition-colors mb-1">
+                  <h3 className="font-serif text-xl font-bold text-black group-hover:text-brand-gold transition-colors mb-1">
                     {dest.name}
                   </h3>
-                  <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed mb-4">
                     {dest.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-800/80">
+                <div className="pt-3 border-t border-slate-100">
                   {/* Best Time to Visit */}
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-4">
-                    <Calendar className="w-3.5 h-3.5 text-gold-400 shrink-0" />
+                  <div className="flex items-center gap-1.5 text-xs text-gray-600 mb-3.5">
+                    <Calendar className="w-3.5 h-3.5 text-brand-gold shrink-0" />
                     <span className="truncate">Best: {dest.bestTime}</span>
                   </div>
 
                   {/* Explore More Button */}
                   <button
                     onClick={() => setSelectedDestination(dest)}
-                    className="w-full py-2.5 px-4 rounded-xl bg-navy-900 hover:bg-gradient-to-r hover:from-turquoise-500 hover:to-cyan-400 hover:text-navy-950 text-slate-200 border border-slate-700 hover:border-transparent font-semibold text-xs flex items-center justify-center gap-1.5 transition-all duration-300 group/btn"
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-black hover:text-white text-black font-serif font-bold text-xs flex items-center justify-center gap-1.5 transition-all duration-200 group/btn"
                   >
                     <span>Explore More</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -154,13 +149,13 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
 
         {filteredDestinations.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-slate-400 text-lg">No destinations matched "{searchQuery}".</p>
+            <p className="text-gray-600 text-lg">No destinations matched "{searchQuery}".</p>
             <button
               onClick={() => {
                 setSearchQuery('');
                 setActiveRegion('All');
               }}
-              className="mt-4 px-6 py-2 rounded-xl bg-turquoise-500 text-navy-950 font-bold text-sm"
+              className="mt-4 px-6 py-2 rounded-xl bg-black text-white font-serif font-bold text-sm"
             >
               Reset Filters
             </button>
@@ -177,4 +172,3 @@ export const DestinationsSection: React.FC<DestinationsSectionProps> = ({
     </section>
   );
 };
-

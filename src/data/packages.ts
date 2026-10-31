@@ -10,6 +10,33 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 35999,
     featuredImage: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Srinagar', 'Gulmarg', 'Pahalgam', 'Sonmarg', 'Dal Lake'],
+    placesDetails: [
+      {
+        name: 'Srinagar',
+        image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?q=80&w=600&auto=format&fit=crop',
+        description: 'Mughal terraced gardens, ancient wooden bridges, and artisan saffron bazaars.',
+      },
+      {
+        name: 'Gulmarg',
+        image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=600&auto=format&fit=crop',
+        description: 'World-famous high altitude Gondola cable car and Apharwat snow meadows.',
+      },
+      {
+        name: 'Pahalgam',
+        image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=600&auto=format&fit=crop',
+        description: 'Betaab Valley pine groves and roaring turquoise Lidder riverbanks.',
+      },
+      {
+        name: 'Sonmarg',
+        image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600&auto=format&fit=crop',
+        description: 'Meadow of Gold surrounded by Himalayan Thajiwas glacial peaks.',
+      },
+      {
+        name: 'Dal Lake',
+        image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?q=80&w=600&auto=format&fit=crop',
+        description: 'Carved cedarwood luxury houseboats and tranquil sunset Shikara cruises.',
+      },
+    ],
     hotelInfo: '5-Star Heritage Houseboat on Dal Lake & Luxury Pine Resort in Gulmarg',
     transportInfo: 'Private Luxury AC Innova Crysta for all sightseeing & transfers',
     inclusions: [
@@ -46,6 +73,28 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 28000,
     featuredImage: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Cochin', 'Munnar', 'Thekkady', 'Alleppey Backwaters'],
+    placesDetails: [
+      {
+        name: 'Cochin',
+        image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=600&auto=format&fit=crop',
+        description: 'Colonial Fort Kochi, Chinese fishing nets, and spice trading alleys.',
+      },
+      {
+        name: 'Munnar',
+        image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=600&auto=format&fit=crop',
+        description: 'Endless rolling emerald tea plantations, Anamudi peak, and waterfalls.',
+      },
+      {
+        name: 'Thekkady',
+        image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=600&auto=format&fit=crop',
+        description: 'Periyar Lake wildlife sanctuary, elephant herds, and spice estates.',
+      },
+      {
+        name: 'Alleppey Backwaters',
+        image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=600&auto=format&fit=crop',
+        description: 'Private luxury houseboat cruise through palm-fringed canals and lagoons.',
+      },
+    ],
     hotelInfo: '4-Star & 5-Star Family Hill Resorts with Premium Private AC Houseboat',
     transportInfo: 'Dedicated AC Tempo Traveller / Innova with family-friendly courteous driver',
     inclusions: [
@@ -82,6 +131,33 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 38000,
     featuredImage: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Leh', 'Nubra Valley', 'Turtuk', 'Pangong Tso', 'Magnetic Hill'],
+    placesDetails: [
+      {
+        name: 'Leh',
+        image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600&auto=format&fit=crop',
+        description: 'Shanti Stupa, Leh Palace, and Himalayan Buddhist monasteries.',
+      },
+      {
+        name: 'Nubra Valley',
+        image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=600&auto=format&fit=crop',
+        description: 'Hunder white sand dunes and double-humped Bactrian camel safaris.',
+      },
+      {
+        name: 'Turtuk',
+        image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=600&auto=format&fit=crop',
+        description: 'Scenic northern frontier village with organic apricot orchards.',
+      },
+      {
+        name: 'Pangong Tso',
+        image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600&auto=format&fit=crop',
+        description: 'High altitude crystal turquoise lake changing shades from dawn to dusk.',
+      },
+      {
+        name: 'Magnetic Hill',
+        image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600&auto=format&fit=crop',
+        description: 'Gravity-defying optical illusion hill and Indus-Zanskar Sangam confluence.',
+      },
+    ],
     hotelInfo: 'Boutique Leh Heritage Hotel & Deluxe Geodesic Domes at Nubra & Pangong',
     transportInfo: 'High-Clearance 4x4 Luxury Scorpio / Innova with Oxygen cylinder onboard',
     inclusions: [
@@ -118,6 +194,28 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 47000,
     featuredImage: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Jaipur', 'Pushkar', 'Jodhpur', 'Udaipur'],
+    placesDetails: [
+      {
+        name: 'Jaipur',
+        image: 'https://images.unsplash.com/photo-1603288940320-984559a8361c?q=80&w=600&auto=format&fit=crop',
+        description: 'Amer Fort, Hawa Mahal, and royal courtyards of the Pink City.',
+      },
+      {
+        name: 'Pushkar',
+        image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=600&auto=format&fit=crop',
+        description: 'Sacred ghats, Brahma Temple, and desert camel fair traditions.',
+      },
+      {
+        name: 'Jodhpur',
+        image: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=600&auto=format&fit=crop',
+        description: 'Colossal Mehrangarh Fort overlooking indigo-blue havelis.',
+      },
+      {
+        name: 'Udaipur',
+        image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?q=80&w=600&auto=format&fit=crop',
+        description: 'Lake Pichola sunset boat cruise and glistening white marble City Palace.',
+      },
+    ],
     hotelInfo: '5-Star Heritage Palaces (ITC Rajputana / Taj Fateh Prakash / Heritage Havelis)',
     transportInfo: 'Chauffeured Mercedes / BMW / Luxury Crysta throughout',
     inclusions: [
@@ -153,6 +251,28 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 18000,
     featuredImage: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['North Goa Beaches', 'South Goa Heritage', 'Mandovi River', 'Dudhsagar'],
+    placesDetails: [
+      {
+        name: 'North Goa Beaches',
+        image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop',
+        description: 'Vibrant beach clubs at Vagator, Anjuna, and parasailing at Calangute.',
+      },
+      {
+        name: 'South Goa Heritage',
+        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=600&auto=format&fit=crop',
+        description: 'Fontainhas Latin quarters, Portuguese churches, and serene Colva sands.',
+      },
+      {
+        name: 'Mandovi River',
+        image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop',
+        description: 'Sunset catamaran yacht cruises and live DJ celebrations on water.',
+      },
+      {
+        name: 'Dudhsagar',
+        image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=600&auto=format&fit=crop',
+        description: 'Four-tiered milky mountain waterfalls surrounded by Bhagwan Mahaveer reserve.',
+      },
+    ],
     hotelInfo: '4-Star Beachside Resort with Swimming Pool & Poolside Bar',
     transportInfo: 'Private AC Coach for group + self-drive scooters option',
     inclusions: [
@@ -186,6 +306,28 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 11000,
     featuredImage: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Rishikesh', 'Shivpuri', 'Ram Jhula', 'Triveni Ghat'],
+    placesDetails: [
+      {
+        name: 'Rishikesh',
+        image: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=600&auto=format&fit=crop',
+        description: 'Himalayan foothills, Beatles ashram, and meditation sanctuaries.',
+      },
+      {
+        name: 'Shivpuri',
+        image: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=600&auto=format&fit=crop',
+        description: 'White-water rapids, cliff jumping, and luxury riverside glamping.',
+      },
+      {
+        name: 'Ram Jhula',
+        image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=600&auto=format&fit=crop',
+        description: 'Iconic suspension bridge spanning the emerald holy river Ganga.',
+      },
+      {
+        name: 'Triveni Ghat',
+        image: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=600&auto=format&fit=crop',
+        description: 'Grand evening Ganga Aarti with brass oil lamps and Vedic chants.',
+      },
+    ],
     hotelInfo: 'Luxury Riverside Glamping Camp with Swimming Pool & AC',
     transportInfo: 'Private AC Ertiga/Innova transfers from Dehradun airport / Haridwar station',
     inclusions: [
@@ -217,6 +359,28 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 21000,
     featuredImage: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Varanasi', 'Sarnath', 'Prayagraj Triveni Sangam', 'Ayodhya Ram Janmabhoomi'],
+    placesDetails: [
+      {
+        name: 'Varanasi',
+        image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=600&auto=format&fit=crop',
+        description: 'Dashashwamedh Ghat Ganga Aarti and Kashi Vishwanath temple corridor.',
+      },
+      {
+        name: 'Sarnath',
+        image: 'https://images.unsplash.com/photo-1590766940554-634a7ed41450?q=80&w=600&auto=format&fit=crop',
+        description: 'Dhamek Stupa and sacred deer park where Buddha delivered his first sermon.',
+      },
+      {
+        name: 'Prayagraj Triveni Sangam',
+        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=600&auto=format&fit=crop',
+        description: 'Holy confluence of Ganga, Yamuna, and mythical Saraswati.',
+      },
+      {
+        name: 'Ayodhya Ram Janmabhoomi',
+        image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=600&auto=format&fit=crop',
+        description: 'Grand Shri Ram Mandir, Hanuman Garhi, and serene Sarayu river aarti.',
+      },
+    ],
     hotelInfo: '4-Star Premium Pilgrimage Hotels near major temples',
     transportInfo: 'Dedicated AC Vehicle with experienced spiritual tour coordinator',
     inclusions: [
@@ -250,6 +414,28 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     originalPrice: 14500,
     featuredImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200&auto=format&fit=crop',
     placesCovered: ['Manali', 'Solang Valley', 'Kasol', 'Manikaran Sahib'],
+    placesDetails: [
+      {
+        name: 'Manali',
+        image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=600&auto=format&fit=crop',
+        description: 'Old Manali cafes, cedar forests, and Beas river viewpoints.',
+      },
+      {
+        name: 'Solang Valley',
+        image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=600&auto=format&fit=crop',
+        description: 'Paragliding, zorbing, and winter snow adventure park.',
+      },
+      {
+        name: 'Kasol',
+        image: 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=600&auto=format&fit=crop',
+        description: 'Parvati Valley pine trails, indie cafes, and river walks.',
+      },
+      {
+        name: 'Manikaran Sahib',
+        image: 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=600&auto=format&fit=crop',
+        description: 'Natural medicinal hot sulfur springs and historic Gurudwara.',
+      },
+    ],
     hotelInfo: 'Comfortable Boutique Riverside Stays & Swiss Tents with mountain views',
     transportInfo: 'Delhi to Manali Luxury AC Volvo Bus + local shared/private sightseeing cabs',
     inclusions: [
@@ -275,4 +461,3 @@ export const HOLIDAY_PACKAGES: HolidayPackage[] = [
     badge: 'Super Saver'
   }
 ];
-

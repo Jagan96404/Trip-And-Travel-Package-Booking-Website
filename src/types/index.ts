@@ -32,6 +32,12 @@ export type PackageCategory =
   | 'Weekend Getaways' 
   | 'Spiritual Tours';
 
+export interface PlaceCovered {
+  name: string;
+  image: string;
+  description: string;
+}
+
 export interface HolidayPackage {
   id: string;
   title: string;
@@ -44,6 +50,7 @@ export interface HolidayPackage {
   originalPrice?: number;
   featuredImage: string;
   placesCovered: string[];
+  placesDetails?: PlaceCovered[];
   hotelInfo: string;
   transportInfo: string;
   inclusions: string[];
@@ -100,4 +107,3 @@ export interface BookingFormData {
   packageType: string;
   specialRequirements: string;
 }
-

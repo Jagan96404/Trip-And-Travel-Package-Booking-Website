@@ -15,7 +15,7 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { ContactBookingSection } from './components/ContactBookingSection';
 import { Footer } from './components/Footer';
 import { Destination } from './types';
-import { MessageCircle, Phone, ArrowUp } from 'lucide-react';
+import { MessageCircle, ArrowUp } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +23,6 @@ export const App: React.FC = () => {
   const [bookingDestination, setBookingDestination] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Scroll to section helper
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -33,7 +32,7 @@ export const App: React.FC = () => {
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 600);
+      setShowScrollTop(window.scrollY > 500);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -71,7 +70,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-navy-950 text-slate-100 relative selection:bg-turquoise-500 selection:text-navy-950">
+    <div className="min-h-screen bg-white text-gray-900 relative selection:bg-brand-gold selection:text-white">
       {/* 1. Brand Loading Intro Screen */}
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
 
@@ -97,19 +96,19 @@ export const App: React.FC = () => {
         onBookNow={handleBookNow}
       />
 
-      {/* 6. Handcrafted Holiday Packages */}
+      {/* 6. Handcrafted Holiday Packages with Real Places Photography */}
       <PackagesSection onBookNow={handleBookNow} />
 
-      {/* 7. Unique Feature A: Smart Trip Planner */}
+      {/* 7. Smart Trip Planner */}
       <SmartTripPlanner onBookCustomItinerary={handleBookNow} />
 
-      {/* 8. Unique Feature B: Interactive India Map */}
+      {/* 8. Interactive Real India & World Map with Zoom In / Out & Satellite View */}
       <InteractiveMap onSelectDestination={handleSelectMapDestination} />
 
-      {/* 9. Unique Feature C: Travel Experiences Section */}
+      {/* 9. Travel Experiences Section */}
       <ExperiencesSection onSelectExperience={handleSelectExperience} />
 
-      {/* 10. Unique Feature E: Why Choose Us */}
+      {/* 10. Why Choose Us */}
       <WhyChooseUs />
 
       {/* 11. Visual Spectacular Gallery with Lightbox */}
@@ -118,7 +117,7 @@ export const App: React.FC = () => {
       {/* 12. About Marvel Holidays */}
       <AboutSection />
 
-      {/* 13. Unique Feature D: Customer Reviews & Ratings */}
+      {/* 13. Customer Reviews & Ratings */}
       <TestimonialsSection />
 
       {/* 14. Contact & Booking Form with Google Maps & Validation */}
@@ -127,13 +126,13 @@ export const App: React.FC = () => {
       {/* 15. Comprehensive Footer */}
       <Footer />
 
-      {/* Floating Action Button: Quick WhatsApp Assistance */}
+      {/* Floating Action Button: WhatsApp Travel Expert */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-auto">
         {showScrollTop && (
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             aria-label="Scroll to top"
-            className="w-11 h-11 rounded-full bg-navy-900/90 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all backdrop-blur-md"
+            className="w-11 h-11 rounded-full bg-white border border-slate-300 text-black hover:bg-slate-100 flex items-center justify-center shadow-luxury transition-all hover:scale-105"
           >
             <ArrowUp className="w-5 h-5" />
           </button>
@@ -144,7 +143,7 @@ export const App: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp Inquiry"
-          className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-bold text-xs sm:text-sm shadow-[0_0_25px_rgba(16,185,129,0.5)] hover:scale-105 transition-all group"
+          className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-serif font-bold text-xs sm:text-sm shadow-luxury hover:scale-105 transition-all group"
         >
           <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform" />
           <span className="hidden sm:inline">Chat with Travel Expert</span>
@@ -155,4 +154,3 @@ export const App: React.FC = () => {
 };
 
 export default App;
-

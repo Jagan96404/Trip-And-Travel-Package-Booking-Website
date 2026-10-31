@@ -9,33 +9,32 @@ interface ExperiencesSectionProps {
 export const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ onSelectExperience }) => {
   const getIcon = (name: string) => {
     switch (name) {
-      case 'Mountain': return <Mountain className="w-5 h-5 text-turquoise-400" />;
-      case 'SunMedium': return <SunMedium className="w-5 h-5 text-gold-400" />;
-      case 'Waves': return <Waves className="w-5 h-5 text-cyan-400" />;
-      case 'Footprints': return <Footprints className="w-5 h-5 text-emerald-400" />;
-      case 'Landmark': return <Landmark className="w-5 h-5 text-amber-400" />;
-      case 'Compass': return <Compass className="w-5 h-5 text-rose-400" />;
-      case 'Sparkles': return <Sparkles className="w-5 h-5 text-purple-400" />;
-      default: return <Compass className="w-5 h-5 text-turquoise-400" />;
+      case 'Mountain': return <Mountain className="w-5 h-5 text-black" />;
+      case 'SunMedium': return <SunMedium className="w-5 h-5 text-brand-gold" />;
+      case 'Waves': return <Waves className="w-5 h-5 text-teal-700" />;
+      case 'Footprints': return <Footprints className="w-5 h-5 text-emerald-700" />;
+      case 'Landmark': return <Landmark className="w-5 h-5 text-amber-700" />;
+      case 'Compass': return <Compass className="w-5 h-5 text-black" />;
+      case 'Sparkles': return <Sparkles className="w-5 h-5 text-brand-gold" />;
+      default: return <Compass className="w-5 h-5 text-black" />;
     }
   };
 
   return (
-    <section id="experiences" className="py-24 relative overflow-hidden bg-navy-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="experiences" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-900/90 border border-turquoise-500/40 text-xs text-turquoise-400 font-semibold uppercase tracking-wider mb-4">
-            <Compass className="w-3.5 h-3.5" />
-            <span>Theme-Based Adventures</span>
-          </div>
+          <span className="text-xs font-bold font-serif uppercase tracking-widest text-brand-gold block mb-2">
+            Thematic Indian Travel
+          </span>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">
-            Travel <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-400 to-gold-500">Experiences</span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
+            Travel Experiences
           </h2>
 
-          <p className="text-slate-300 text-sm sm:text-base">
-            Whether you crave high-altitude summits, quiet palm lagoons, historic royal forts, or adrenaline-packed rapids, find experiences tailored to your inner traveler.
+          <p className="text-gray-700 text-sm sm:text-base">
+            Whether you crave high-altitude summits, quiet palm lagoons, historic royal forts, or adrenaline-packed rapids, find experiences tailored to your rhythm.
           </p>
         </div>
 
@@ -45,44 +44,40 @@ export const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ onSelect
             <div
               key={exp.id}
               onClick={() => onSelectExperience(exp.name)}
-              className={`group relative rounded-3xl overflow-hidden cursor-pointer glass-card-hover border border-slate-800 shadow-xl ${
+              className={`group relative rounded-3xl overflow-hidden cursor-pointer shadow-luxury border border-slate-200 white-card-hover ${
                 idx === 0 ? 'sm:col-span-2 sm:row-span-1 h-72' : 'h-72'
               }`}
             >
-              {/* Background Photo */}
               <img
                 src={exp.image}
                 alt={exp.name}
                 loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               />
 
-              {/* Gradient Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/50 to-transparent group-hover:via-navy-950/40 transition-colors" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
-              {/* Top Bar with Icon & Count */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-navy-950/80 backdrop-blur-md border border-slate-700/80 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-2xl bg-white/95 backdrop-blur-md flex items-center justify-center shadow-md">
                   {getIcon(exp.iconName)}
                 </div>
 
-                <span className="px-3 py-1 rounded-full bg-navy-950/80 backdrop-blur-md border border-slate-700 text-xs font-semibold text-slate-300">
+                <span className="px-3 py-1 rounded-full bg-black/80 text-white text-xs font-serif font-bold">
                   {exp.count}+ Packages
                 </span>
               </div>
 
-              {/* Bottom Content */}
               <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-1 group-hover:text-gold-300 transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-1 group-hover:text-amber-300 transition-colors">
                   {exp.name}
                 </h3>
-                <p className="text-xs text-slate-300 mb-3 line-clamp-1">
+                <p className="text-xs text-slate-200 mb-3 line-clamp-1">
                   {exp.tagline}
                 </p>
 
-                <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 text-xs font-semibold text-turquoise-400">
+                <div className="flex items-center justify-between pt-2 border-t border-white/20 text-xs font-bold text-white">
                   <span>{exp.popularDestinations.slice(0, 3).join(', ')}</span>
-                  <div className="w-7 h-7 rounded-full bg-turquoise-500/10 flex items-center justify-center group-hover:bg-turquoise-500 group-hover:text-navy-950 transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-white text-black flex items-center justify-center group-hover:bg-brand-gold group-hover:text-white transition-colors">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </div>
@@ -94,4 +89,3 @@ export const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ onSelect
     </section>
   );
 };
-
