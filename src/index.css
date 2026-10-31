@@ -16,7 +16,11 @@
   }
 
   /* Times New Roman bold black for all headings */
-  h1, h2, h3, h4, .font-times {
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-times {
     font-family: "Times New Roman", Times, Georgia, serif;
     color: #000000;
   }
@@ -25,13 +29,16 @@
   ::-webkit-scrollbar {
     width: 8px;
   }
+
   ::-webkit-scrollbar-track {
     background: #f1f5f9;
   }
+
   ::-webkit-scrollbar-thumb {
     background: #cbd5e1;
     border-radius: 4px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
   }
@@ -47,6 +54,7 @@
   .white-card-hover {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
   .white-card-hover:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.12);
@@ -61,11 +69,37 @@
     padding: 0 !important;
     overflow: hidden !important;
   }
+
   .leaflet-popup-content {
     margin: 0 !important;
     line-height: 1.4 !important;
   }
+
   .leaflet-popup-tip {
     background: #ffffff !important;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow {
+    animation: spinSlow 14s linear infinite;
+  }
+
+  @keyframes bounceSubtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .animate-bounce-subtle {
+    animation: bounceSubtle 3s ease-in-out infinite;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThreeGlobe } from './ThreeGlobe';
+import { LuxuryTravelHub } from './LuxuryTravelHub';
 import { ArrowRight, Sparkles, ShieldCheck, Star } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -124,11 +124,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
 
-          {/* Right Column: 3D Earth Globe Canvas */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
-            <div className="w-full h-[400px] sm:h-[480px] md:h-[520px] relative bg-white/60 rounded-3xl p-2 shadow-luxury border border-slate-200">
-              <ThreeGlobe />
-            </div>
+          {/* Right Column: Interactive Luxury Travel Experience Showcase */}
+          <div className="lg:col-span-5 relative flex items-center justify-center pt-6 lg:pt-0">
+            <LuxuryTravelHub
+              onDiscoverPackages={onDiscoverPackages}
+              onPlanTrip={onPlanTrip}
+            />
           </div>
         </div>
       </div>
