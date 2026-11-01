@@ -203,11 +203,6 @@ export const LuxuryTravelHub: React.FC<LuxuryTravelHubProps> = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Floating Marvel Logo Badge (Top Right) */}
-        <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 z-30 bg-[#09090b] rounded-2xl p-2 border border-white/20 shadow-2xl flex items-center gap-2 animate-bounce-subtle">
-          <MarvelLogo size="sm" />
-        </div>
-
         {/* Floating Verified Seal (Bottom Left Accent) */}
         <div className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 z-30 bg-[#09090b] rounded-2xl p-2.5 border border-white/10 shadow-2xl flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-emerald-950/80 text-emerald-400 flex items-center justify-center border border-emerald-500/40">
@@ -250,11 +245,9 @@ export const LuxuryTravelHub: React.FC<LuxuryTravelHubProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-2 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-[10px] font-mono text-emerald-300 uppercase tracking-wider font-semibold">
-                Daily Departures
-              </span>
+            {/* Official Full Marvel Logo */}
+            <div className="flex items-center pl-2">
+              <MarvelLogo size="sm" />
             </div>
           </div>
 
