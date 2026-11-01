@@ -203,16 +203,9 @@ export const LuxuryTravelHub: React.FC<LuxuryTravelHubProps> = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Floating Brass Compass (Top Right Accent) */}
-        <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 z-30 bg-[#09090b] rounded-2xl p-2.5 border-2 border-amber-400/60 shadow-2xl flex items-center gap-2 animate-bounce-subtle">
-          <div className="relative w-8 h-8 rounded-full border border-amber-400 bg-zinc-900 flex items-center justify-center">
-            <Compass className="w-5 h-5 text-amber-400 animate-spin-slow" />
-            <div className="absolute top-0.5 w-1 h-1 bg-[#ED1D24] rounded-full" />
-          </div>
-          <div className="text-left pr-1 hidden xs:block">
-            <span className="text-[9px] uppercase tracking-wider text-zinc-400 font-mono block">Specialization</span>
-            <span className="text-[11px] font-serif font-bold text-white block leading-none">Tour & Travels</span>
-          </div>
+        {/* Floating Marvel Logo Badge (Top Right) */}
+        <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 z-30 bg-[#09090b] rounded-2xl p-2 border border-white/20 shadow-2xl flex items-center gap-2 animate-bounce-subtle">
+          <MarvelLogo size="sm" />
         </div>
 
         {/* Floating Verified Seal (Bottom Left Accent) */}

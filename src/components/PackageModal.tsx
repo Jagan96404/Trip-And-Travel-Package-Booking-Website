@@ -126,13 +126,7 @@ export const PackageModal: React.FC<PackageModalProps> = ({
                       </p>
                     </div>
                   </div>
-                  <div className="p-2.5">
-                    <p className="text-[11px] text-gray-600 line-clamp-2 leading-tight">
-                      {place.description}
-                    </p>
-                  </div>
-                </div>
-              ))
+                ))
               : pkg.placesCovered.map((place, idx) => (
                   <div
                     key={idx}

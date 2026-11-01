@@ -121,4 +121,22 @@
   .animate-bounce-subtle {
     animation: bounceSubtle 3s ease-in-out infinite;
   }
+
+  @keyframes travelingLight {
+    0% {
+      transform: translate(-20%, -15%) scale(1);
+      opacity: 0.22;
+    }
+    50% {
+      transform: translate(20%, 20%) scale(1.25);
+      opacity: 0.42;
+    }
+    100% {
+      transform: translate(-20%, -15%) scale(1);
+      opacity: 0.22;
+    }
+  }
+  .animate-traveling-light {
+    animation: travelingLight 18s ease-in-out infinite;
+  }
 }

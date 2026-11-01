@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { DESTINATIONS } from '../data/destinations';
 import { Destination } from '../types';
-import { Layers, ZoomIn, ZoomOut, RotateCcw, MapPin, Sparkles, ArrowRight, Calendar, IndianRupee } from 'lucide-react';
+import { ZoomIn, ZoomOut, RotateCcw, MapPin, Sparkles, ArrowRight, Calendar, IndianRupee } from 'lucide-react';
+
+declare global {
+  interface Window {
+    google?: any;
+    initGoogleMap?: () => void;
+  }
+}
 
 interface InteractiveMapProps {
   onSelectDestination: (destination: Destination) => void;
@@ -11,177 +16,216 @@ interface InteractiveMapProps {
 
 export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestination }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const tileLayerRef = useRef<L.TileLayer | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]);
+  const infoWindowRef = useRef<any>(null);
+
   const [mapStyle, setMapStyle] = useState<'streets' | 'satellite'>('streets');
   const [selectedDest, setSelectedDest] = useState<Destination>(DESTINATIONS[0]);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
+  // Google Maps Dark Luxury Styling
+  const darkMapStyle = [
+    { elementType: 'geometry', stylers: [{ color: '#121218' }] },
+    { elementType: 'labels.text.stroke', stylers: [{ color: '#09090b' }] },
+    { elementType: 'labels.text.fill', stylers: [{ color: '#a1a1aa' }] },
+    {
+      featureType: 'administrative.country',
+      elementType: 'geometry.stroke',
+      stylers: [{ color: '#d4af37' }, { weight: 1.2 }],
+    },
+    {
+      featureType: 'administrative.province',
+      elementType: 'geometry.stroke',
+      stylers: [{ color: '#3f3f46' }, { weight: 0.8 }],
+    },
+    {
+      featureType: 'administrative.locality',
+      elementType: 'labels.text.fill',
+      stylers: [{ color: '#fbbf24' }],
+    },
+    {
+      featureType: 'poi',
+      elementType: 'labels.text.fill',
+      stylers: [{ color: '#71717a' }],
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [{ color: '#14231b' }],
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry',
+      stylers: [{ color: '#272738' }],
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry.stroke',
+      stylers: [{ color: '#181824' }],
+    },
+    {
+      featureType: 'road.highway',
+      elementType: 'geometry',
+      stylers: [{ color: '#3f3f56' }],
+    },
+    {
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [{ color: '#090e18' }],
+    },
+    {
+      featureType: 'water',
+      elementType: 'labels.text.fill',
+      stylers: [{ color: '#38bdf8' }],
+    },
+  ];
+
+  // Initialize Google Map
   useEffect(() => {
-    if (!mapContainerRef.current || mapInstanceRef.current) return;
+    let checkInterval: any = null;
 
-    // Center on India geographic heart
-    const map = L.map(mapContainerRef.current, {
-      center: [22.9734, 78.6569],
-      zoom: 5,
-      minZoom: 3,
-      maxZoom: 18,
-      zoomControl: false,
-      scrollWheelZoom: true,
-    });
+    const initMap = () => {
+      if (!mapContainerRef.current || !window.google?.maps) return;
 
-    mapInstanceRef.current = map;
-
-    // Default tile layer: CartoDB Dark Matter for Black Luxury Theme
-    const darkLayer = L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-      {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19,
-      }
-    ).addTo(map);
-
-    tileLayerRef.current = darkLayer;
-
-    // Create custom dark luxury pin icon
-    const createCustomIcon = (name: string, price: number) => {
-      return L.divIcon({
-        className: 'custom-leaflet-marker',
-        html: `
-          <div style="
-            display: flex;
-            align-items: center;
-            background: #09090b;
-            color: #ffffff;
-            border: 2px solid #ED1D24;
-            border-radius: 9999px;
-            padding: 3px 8px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.6);
-            font-family: 'Times New Roman', serif;
-            font-size: 11px;
-            font-weight: 700;
-            white-space: nowrap;
-            cursor: pointer;
-            transform: translate(-50%, -50%);
-          ">
-            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#ED1D24; margin-right:5px; box-shadow:0 0 6px #ED1D24;"></span>
-            <span>${name}</span>
-            <span style="margin-left:4px; color:#fbbf24; font-size:10px;">₹${(price / 1000).toFixed(0)}k</span>
-          </div>
-        `,
-        iconSize: [80, 24],
-        iconAnchor: [40, 12],
+      const map = new window.google.maps.Map(mapContainerRef.current, {
+        center: { lat: 22.9734, lng: 78.6569 },
+        zoom: 5,
+        minZoom: 3,
+        maxZoom: 18,
+        disableDefaultUI: true,
+        styles: darkMapStyle,
       });
+
+      mapInstanceRef.current = map;
+      infoWindowRef.current = new window.google.maps.InfoWindow();
+
+      // Clear old markers
+      markersRef.current.forEach((m) => m.setMap(null));
+      markersRef.current = [];
+
+      // Create Custom SVG Marker Icon
+      const createPinIcon = (name: string) => ({
+        url:
+          'data:image/svg+xml;charset=UTF-8,' +
+          encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">
+            <defs>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.9"/>
+              </filter>
+            </defs>
+            <path d="M17 0 C7.6 0 0 7.6 0 17 C0 27.5 17 42 17 42 C17 42 34 27.5 34 17 C34 7.6 26.4 0 17 0 Z" fill="#ED1D24" filter="url(#glow)"/>
+            <circle cx="17" cy="16" r="10" fill="#09090b" stroke="#fbbf24" stroke-width="2"/>
+            <circle cx="17" cy="16" r="4.5" fill="#fbbf24"/>
+          </svg>
+        `),
+        scaledSize: new window.google.maps.Size(30, 36),
+        anchor: new window.google.maps.Point(15, 36),
+      });
+
+      // Add pins for all 27 destinations
+      DESTINATIONS.forEach((dest) => {
+        const marker = new window.google.maps.Marker({
+          position: { lat: dest.coordinates.lat, lng: dest.coordinates.lng },
+          map,
+          title: dest.name,
+          icon: createPinIcon(dest.name),
+        });
+
+        marker.addListener('click', () => {
+          setSelectedDest(dest);
+
+          const contentString = `
+            <div style="background:#0c0c12; color:#ffffff; padding:12px; border-radius:14px; max-width:240px; font-family:'Plus Jakarta Sans',sans-serif; border:1px solid rgba(255,255,255,0.15);">
+              <img src="${dest.image}" alt="${dest.name}" style="width:100%; height:110px; object-fit:cover; border-radius:10px; margin-bottom:8px;" />
+              <div style="font-family:'Times New Roman',serif; font-size:16px; font-weight:bold; color:#ffffff; margin-bottom:2px;">
+                ${dest.name}
+              </div>
+              <div style="font-size:11px; color:#a1a1aa; margin-bottom:6px;">${dest.state} • ${dest.region}</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:10px; color:#71717a;">Starting From</span>
+                <span style="font-family:'Times New Roman',serif; font-size:15px; font-weight:bold; color:#fbbf24;">₹${dest.startingPrice.toLocaleString('en-IN')}</span>
+              </div>
+              <button id="gmap-book-${dest.id}" style="width:100%; background:#ED1D24; color:#ffffff; border:none; padding:7px 0; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer;">
+                View Details & Book →
+              </button>
+            </div>
+          `;
+
+          infoWindowRef.current.setContent(contentString);
+          infoWindowRef.current.open(map, marker);
+
+          setTimeout(() => {
+            const btn = document.getElementById(`gmap-book-${dest.id}`);
+            if (btn) {
+              btn.onclick = () => onSelectDestination(dest);
+            }
+          }, 100);
+        });
+
+        markersRef.current.push(marker);
+      });
+
+      setIsMapLoaded(true);
     };
 
-    // Add pins for all destinations
-    DESTINATIONS.forEach((dest) => {
-      const marker = L.marker([dest.coordinates.lat, dest.coordinates.lng], {
-        icon: createCustomIcon(dest.name, dest.startingPrice),
-      }).addTo(map);
-
-      // Popup with real photo
-      const popupContent = document.createElement('div');
-      popupContent.style.width = '240px';
-      popupContent.innerHTML = `
-        <div style="overflow:hidden; border-radius:12px; font-family:'Plus Jakarta Sans', sans-serif; background:#0d0d14; color:#ffffff;">
-          <img src="${dest.image}" alt="${dest.name}" style="width:100%; height:120px; object-fit:cover;" />
-          <div style="padding:12px; background:#0d0d14;">
-            <div style="font-family:'Times New Roman', Times, serif; font-size:16px; font-weight:800; color:#ffffff; margin-bottom:2px;">
-              ${dest.name}
-            </div>
-            <div style="font-size:11px; color:#a1a1aa; margin-bottom:8px;">${dest.state} • ${dest.region}</div>
-            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
-              <span style="font-size:10px; color:#71717a;">Starting From</span>
-              <span style="font-family:'Times New Roman', serif; font-size:16px; font-weight:800; color:#fbbf24;">₹${dest.startingPrice.toLocaleString('en-IN')}</span>
-            </div>
-            <button id="book-btn-${dest.id}" style="
-              width:100%;
-              background:#ED1D24;
-              color:#ffffff;
-              border:none;
-              padding:8px 0;
-              border-radius:8px;
-              font-size:11px;
-              font-weight:700;
-              cursor:pointer;
-              transition:background 0.2s;
-            ">
-              View & Book Details →
-            </button>
-          </div>
-        </div>
-      `;
-
-      marker.bindPopup(popupContent);
-
-      marker.on('popupopen', () => {
-        setSelectedDest(dest);
-        const btn = document.getElementById(`book-btn-${dest.id}`);
-        if (btn) {
-          btn.onclick = () => onSelectDestination(dest);
+    if (window.google?.maps) {
+      initMap();
+    } else {
+      checkInterval = setInterval(() => {
+        if (window.google?.maps) {
+          clearInterval(checkInterval);
+          initMap();
         }
-      });
-
-      marker.on('click', () => {
-        setSelectedDest(dest);
-      });
-    });
+      }, 300);
+    }
 
     return () => {
-      map.remove();
-      mapInstanceRef.current = null;
+      if (checkInterval) clearInterval(checkInterval);
     };
   }, [onSelectDestination]);
 
-  // Handle Layer Toggle (Satellite vs Street)
+  // Toggle Map Type (Street vs Satellite)
   const toggleMapLayer = (type: 'streets' | 'satellite') => {
     if (!mapInstanceRef.current) return;
     setMapStyle(type);
 
-    if (tileLayerRef.current) {
-      mapInstanceRef.current.removeLayer(tileLayerRef.current);
-    }
-
     if (type === 'satellite') {
-      // Real Satellite World Imagery (Esri World Imagery)
-      tileLayerRef.current = L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        {
-          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-          maxZoom: 18,
-        }
-      ).addTo(mapInstanceRef.current);
+      mapInstanceRef.current.setMapTypeId('hybrid');
     } else {
-      // Dark Luxury Street Map
-      tileLayerRef.current = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        {
-          attribution: '&copy; OpenStreetMap &copy; CARTO',
-          subdomains: 'abcd',
-          maxZoom: 19,
-        }
-      ).addTo(mapInstanceRef.current);
+      mapInstanceRef.current.setMapTypeId('roadmap');
+      mapInstanceRef.current.setOptions({ styles: darkMapStyle });
     }
   };
 
   const handleZoomIn = () => {
-    mapInstanceRef.current?.zoomIn();
+    if (!mapInstanceRef.current) return;
+    mapInstanceRef.current.setZoom(mapInstanceRef.current.getZoom() + 1);
   };
 
   const handleZoomOut = () => {
-    mapInstanceRef.current?.zoomOut();
+    if (!mapInstanceRef.current) return;
+    mapInstanceRef.current.setZoom(mapInstanceRef.current.getZoom() - 1);
   };
 
   const handleReset = () => {
-    mapInstanceRef.current?.setView([22.9734, 78.6569], 5, { animate: true });
+    if (!mapInstanceRef.current) return;
+    mapInstanceRef.current.setCenter({ lat: 22.9734, lng: 78.6569 });
+    mapInstanceRef.current.setZoom(5);
   };
 
   const jumpToDestination = (dest: Destination) => {
     setSelectedDest(dest);
-    mapInstanceRef.current?.flyTo([dest.coordinates.lat, dest.coordinates.lng], 8, {
-      duration: 1.5,
-    });
+    if (!mapInstanceRef.current) return;
+    mapInstanceRef.current.panTo({ lat: dest.coordinates.lat, lng: dest.coordinates.lng });
+    mapInstanceRef.current.setZoom(8);
+
+    const targetMarker = markersRef.current.find((m) => m.getTitle() === dest.name);
+    if (targetMarker && infoWindowRef.current) {
+      targetMarker.setAnimation(window.google.maps.Animation.BOUNCE);
+      setTimeout(() => targetMarker.setAnimation(null), 1400);
+    }
   };
 
   return (
@@ -191,7 +235,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-amber-400 mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Pan, Zoom & Explore Sights</span>
+            <span>Google Maps Engine • All 27 Destinations</span>
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
@@ -199,13 +243,13 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
           </h2>
 
           <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-            Zoom in, switch between dark street and satellite imagery, and discover places across North, South, East, and West India with real photography and package details.
+            Powered by official Google Maps. Pan, zoom, and explore North, South, East, and West India with dark street styles, real satellite imagery, and verified real destination photography.
           </p>
         </div>
 
         {/* Map Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Real Leaflet Map Container */}
+          {/* Google Maps Container */}
           <div className="lg:col-span-8 bg-[#0d0d14] p-3 rounded-3xl shadow-2xl border border-white/10 relative">
             {/* Map Controls Header */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-3 mb-2 bg-zinc-900/90 rounded-2xl border border-white/10">
@@ -229,7 +273,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
                       : 'bg-zinc-800 text-zinc-400 hover:text-white'
                   }`}
                 >
-                  Real Satellite View
+                  Google Satellite View
                 </button>
               </div>
 
@@ -260,18 +304,25 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
               </div>
             </div>
 
-            {/* Real Interactive Map Canvas */}
+            {/* Google Map Canvas */}
             <div
               ref={mapContainerRef}
-              className="w-full h-[520px] rounded-2xl overflow-hidden border border-white/10 z-10"
-            />
+              className="w-full h-[520px] rounded-2xl overflow-hidden border border-white/10 z-10 bg-[#09090e]"
+            >
+              {!isMapLoaded && (
+                <div className="w-full h-full flex flex-col items-center justify-center text-zinc-400 gap-3">
+                  <div className="w-8 h-8 border-2 border-[#ED1D24] border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs font-mono">Initializing Google Maps...</span>
+                </div>
+              )}
+            </div>
 
             {/* Quick jump pills */}
             <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
               <span className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider shrink-0">
                 Quick Jump:
               </span>
-              {DESTINATIONS.slice(0, 10).map((d) => (
+              {DESTINATIONS.slice(0, 12).map((d) => (
                 <button
                   key={d.id}
                   onClick={() => jumpToDestination(d)}
@@ -352,8 +403,5 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
         </div>
       </div>
     </section>
-  );
-};
-    </section >
   );
 };

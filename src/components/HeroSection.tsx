@@ -32,19 +32,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <section id="home" className="relative min-h-[95vh] flex items-center justify-center pt-32 pb-20 overflow-hidden bg-[#050507]">
-      {/* Dark Cinematic Photo Scrim */}
+      {/* Background Cinematic Traveling Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none scale-105"
+        poster="./images/destinations/kashmir.jpg"
+      >
+        <source
+          src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-winding-mountain-road-42777-large.mp4"
+          type="video/mp4"
+        />
+        <source
+          src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      {/* Traveling Ambient Light Visible Behind Site */}
+      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#ED1D24]/20 via-amber-500/20 to-transparent blur-[120px] pointer-events-none animate-traveling-light" />
+      <div className="absolute top-1/3 -right-32 w-[550px] h-[550px] rounded-full bg-gradient-to-bl from-amber-400/20 via-[#ED1D24]/15 to-transparent blur-[130px] pointer-events-none animate-traveling-light [animation-delay:-9s]" />
+
+      {/* Dark Cinematic Photo Scrim Slides (Seamless Backup) */}
       {heroBackgrounds.map((bg, idx) => (
         <div
           key={bg}
           className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-            idx === currentSlide ? 'opacity-25' : 'opacity-0'
+            idx === currentSlide ? 'opacity-15' : 'opacity-0'
           }`}
           style={{ backgroundImage: `url(${bg})` }}
         />
       ))}
 
       {/* Deep Obsidian Gradient Vignette */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/90 via-[#050507]/80 to-[#050507]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/90 via-[#050507]/75 to-[#050507]" />
 
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
