@@ -247,7 +247,7 @@ export const LuxuryTravelHub: React.FC<LuxuryTravelHubProps> = ({
 
             {/* Official Full Marvel Logo */}
             <div className="flex items-center pl-2">
-              <MarvelLogo size="sm" />
+              <MarvelLogo size="md" />
             </div>
           </div>
 
