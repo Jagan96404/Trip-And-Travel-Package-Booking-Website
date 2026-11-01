@@ -48,34 +48,34 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
         ? Math.round(selectedDestObj.startingPrice * 1.45)
         : Math.round(selectedDestObj.startingPrice * 2.3);
 
-    const generatedDays = Array.from({ length: durationDays }).map((_, index) => {
-      const dayNum = index + 1;
-      let dayTitle = '';
-      let desc = '';
-
+    const generatedDays = Array.from({ length: durationDays }, (_, idx) => {
+      const dayNum = idx + 1;
       if (dayNum === 1) {
-        dayTitle = `Arrive from ${startCity} & Grand Welcome`;
-        desc = `Flight/transfer arrival in ${selectedDestObj.name}. Private luxury check-in, orientation tea, and leisurely evening exploring ${selectedDestObj.highlights[0]}.`;
+        return {
+          day: 1,
+          title: `Arrival & VIP Reception in ${selectedDestObj.name}`,
+          desc: `Scenic transfer from ${startCity} hub. Private check-in to handpicked resort. Evening orientation and authentic local dinner.`,
+        };
       } else if (dayNum === durationDays) {
-        dayTitle = `Sunrise Vistas, Souvenir Trails & Departure`;
-        desc = `Final breakfast with panoramic views. Visit local craft bazaars for authentic regional souvenirs. Private airport drop back to ${startCity}.`;
+        return {
+          day: dayNum,
+          title: `Souvenir Shopping & Farewell Departure`,
+          desc: `Morning breakfast with panoramic views. Artisan market visit for local specialties. Private transfer back with memories of a lifetime.`,
+        };
       } else {
-        const highlightIndex = (dayNum - 2) % selectedDestObj.highlights.length;
-        dayTitle = `Immersive Experience: ${selectedDestObj.highlights[highlightIndex]}`;
-        desc = `Full day excursion tailored to your interest in ${interests.slice(0, 2).join(' & ')}. Includes private guide, priority entrance passes, and scenic lunch spot.`;
+        const highlight = selectedDestObj.highlights[idx % selectedDestObj.highlights.length];
+        return {
+          day: dayNum,
+          title: `Exploring ${highlight}`,
+          desc: `Private chauffeured sightseeing excursion to ${highlight}. Curated photography stops, lunch at heritage eatery, and leisurely evening.`,
+        };
       }
-
-      return {
-        day: dayNum,
-        title: dayTitle,
-        desc,
-      };
     });
 
     setGeneratedItinerary({
       destObj: selectedDestObj,
-      durationDays,
       startCity,
+      durationDays,
       travelersCount,
       travelType,
       budgetTier,
@@ -87,29 +87,29 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
   };
 
   return (
-    <section id="planner" className="py-20 bg-white">
+    <section id="planner" className="py-24 bg-[#050507] text-white border-t border-white/10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-bold font-serif uppercase tracking-widest text-brand-gold block mb-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-400 block mb-2">
             AI-Assisted Smart Travel Engine
           </span>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             Smart Trip Planner
           </h2>
 
-          <p className="text-gray-700 text-sm sm:text-base">
+          <p className="text-zinc-300 text-sm sm:text-base">
             Design your bespoke Indian vacation in seconds. Select your travel vibe, dates, and budget to generate a custom suggested itinerary with transparent pricing.
           </p>
         </div>
 
         {/* Wizard Container */}
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-luxury p-6 sm:p-10">
+        <div className="bg-[#0e0e14] rounded-3xl border border-white/10 shadow-2xl p-6 sm:p-10">
           {!generatedItinerary ? (
             <div>
               {/* Step Indicators */}
-              <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
+              <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/10">
                 {[
                   { num: 1, label: 'Destinations' },
                   { num: 2, label: 'Duration & Group' },
@@ -124,17 +124,17 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors ${
                         step === s.num
-                          ? 'bg-black text-white shadow-sm'
+                          ? 'bg-[#ED1D24] text-white shadow-md'
                           : step > s.num
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-slate-100 text-gray-500'
+                          ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/30'
+                          : 'bg-zinc-800 text-zinc-400'
                       }`}
                     >
                       {step > s.num ? '✓' : s.num}
                     </div>
                     <span
                       className={`font-serif text-xs font-bold hidden sm:inline ${
-                        step === s.num ? 'text-black' : 'text-gray-400'
+                        step === s.num ? 'text-white' : 'text-zinc-500'
                       }`}
                     >
                       {s.label}
@@ -146,23 +146,23 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
               {/* Step 1: Destination and Departure */}
               {step === 1 && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h3 className="font-serif text-xl font-bold text-black mb-4">
+                  <h3 className="font-serif text-xl font-bold text-white mb-4">
                     1. Choose Starting Point & Dream Destination
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                      <label className="text-xs font-serif font-bold text-black uppercase tracking-wider block mb-2">
+                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                      <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider block mb-2">
                         Departure City
                       </label>
                       <select
                         value={startCity}
                         onChange={(e) => setStartCity(e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm font-serif font-bold text-black focus:outline-none focus:border-black cursor-pointer shadow-sm"
+                        className="w-full bg-zinc-800 border border-white/10 rounded-xl p-3 text-sm font-serif font-bold text-white focus:outline-none focus:border-[#ED1D24] cursor-pointer"
                       >
                         {['Delhi NCR', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad'].map(
                           (c) => (
-                            <option key={c} value={c}>
+                            <option key={c} value={c} className="bg-zinc-900 text-white">
                               {c}
                             </option>
                           )
@@ -170,18 +170,18 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                       </select>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                      <label className="text-xs font-serif font-bold text-black uppercase tracking-wider block mb-2">
+                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                      <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider block mb-2">
                         Target Destination in India
                       </label>
                       <select
                         value={destination}
                         onChange={(e) => setDestination(e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm font-serif font-bold text-black focus:outline-none focus:border-black cursor-pointer shadow-sm"
+                        className="w-full bg-zinc-800 border border-white/10 rounded-xl p-3 text-sm font-serif font-bold text-white focus:outline-none focus:border-[#ED1D24] cursor-pointer"
                       >
                         {DESTINATIONS.map((d) => (
-                          <option key={d.id} value={d.name}>
-                            {d.name} ({d.state})
+                          <option key={d.id} value={d.name} className="bg-zinc-900 text-white">
+                            {d.name} ({d.region})
                           </option>
                         ))}
                       </select>
@@ -191,75 +191,67 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                   <div className="flex justify-end pt-4">
                     <button
                       onClick={() => setStep(2)}
-                      className="px-6 py-3 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-sm"
+                      className="px-6 py-3 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-md"
                     >
-                      <span>Continue to Duration</span>
+                      <span>Continue to Duration & Group</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* Step 2: Duration and Group */}
+              {/* Step 2: Duration & Travellers */}
               {step === 2 && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h3 className="font-serif text-xl font-bold text-black mb-4">
-                    2. Trip Duration & Travel Companions
+                  <h3 className="font-serif text-xl font-bold text-white mb-4">
+                    2. Trip Duration & Group Composition
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                      <label className="text-xs font-serif font-bold text-black uppercase tracking-wider block mb-2">
-                        Duration (Days): {durationDays} Days
+                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                      <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider block mb-2">
+                        Duration (Days)
                       </label>
                       <input
-                        type="range"
+                        type="number"
                         min={3}
                         max={14}
                         value={durationDays}
-                        onChange={(e) => setDurationDays(Number(e.target.value))}
-                        className="w-full accent-black cursor-pointer mt-2"
+                        onChange={(e) => setDurationDays(parseInt(e.target.value) || 3)}
+                        className="w-full bg-zinc-800 border border-white/10 rounded-xl p-3 text-sm font-serif font-bold text-white focus:outline-none focus:border-[#ED1D24]"
                       />
-                      <div className="flex justify-between text-[11px] text-gray-500 mt-1">
-                        <span>3 Days</span>
-                        <span>7 Days</span>
-                        <span>14 Days</span>
-                      </div>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                      <label className="text-xs font-serif font-bold text-black uppercase tracking-wider block mb-2">
-                        Number of Travellers: {travelersCount}
+                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                      <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider block mb-2">
+                        Total Travellers
                       </label>
                       <input
-                        type="range"
+                        type="number"
                         min={1}
-                        max={12}
+                        max={100}
                         value={travelersCount}
-                        onChange={(e) => setTravelersCount(Number(e.target.value))}
-                        className="w-full accent-brand-gold cursor-pointer mt-2"
+                        onChange={(e) => setTravelersCount(parseInt(e.target.value) || 1)}
+                        className="w-full bg-zinc-800 border border-white/10 rounded-xl p-3 text-sm font-serif font-bold text-white focus:outline-none focus:border-[#ED1D24]"
                       />
-                      <div className="flex justify-between text-[11px] text-gray-500 mt-1">
-                        <span>Solo</span>
-                        <span>Couple (2)</span>
-                        <span>Group (12)</span>
-                      </div>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                      <label className="text-xs font-serif font-bold text-black uppercase tracking-wider block mb-2">
-                        Trip Vibe
+                    <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                      <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider block mb-2">
+                        Travel Type
                       </label>
                       <select
                         value={travelType}
                         onChange={(e) => setTravelType(e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-sm font-serif font-bold text-black focus:outline-none focus:border-black cursor-pointer shadow-sm"
+                        className="w-full bg-zinc-800 border border-white/10 rounded-xl p-3 text-sm font-serif font-bold text-white focus:outline-none focus:border-[#ED1D24] cursor-pointer"
                       >
-                        <option value="Couple / Honeymoon">Couple / Honeymoon</option>
-                        <option value="Family with Kids">Family with Kids</option>
-                        <option value="Senior Citizens Comfort">Senior Citizens Comfort</option>
-                        <option value="Friends Adventure Group">Friends Adventure Group</option>
-                        <option value="Solo Rejuvenation">Solo Rejuvenation</option>
+                        <option className="bg-zinc-900 text-white">🎒 School Excursion</option>
+                        <option className="bg-zinc-900 text-white">🎓 College IV Trip</option>
+                        <option className="bg-zinc-900 text-white">💼 Corporate Offsite</option>
+                        <option className="bg-zinc-900 text-white">Couple / Honeymoon</option>
+                        <option className="bg-zinc-900 text-white">Family Vacation</option>
+                        <option className="bg-zinc-900 text-white">Friends Group</option>
+                        <option className="bg-zinc-900 text-white">♦️ Devotional Yatra</option>
                       </select>
                     </div>
                   </div>
@@ -267,13 +259,13 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={() => setStep(1)}
-                      className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-black font-serif font-bold text-sm"
+                      className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-serif font-bold text-sm"
                     >
                       Back
                     </button>
                     <button
                       onClick={() => setStep(3)}
-                      className="px-6 py-3 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-sm"
+                      className="px-6 py-3 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-md"
                     >
                       <span>Continue to Budget</span>
                       <ArrowRight className="w-4 h-4" />
@@ -285,8 +277,8 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
               {/* Step 3: Budget Tier */}
               {step === 3 && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h3 className="font-serif text-xl font-bold text-black mb-4">
-                    3. Select Accommodation & Comfort Tier
+                  <h3 className="font-serif text-xl font-bold text-white mb-4">
+                    3. Select Accommodation & Service Standard
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -294,20 +286,20 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                       {
                         id: 'budget',
                         name: 'Smart Explorer',
-                        desc: 'Clean 3-Star verified boutique hotels, shared or private swift cabs, scenic stays.',
-                        priceLabel: 'Economy Friendly',
+                        desc: 'Clean 3-Star boutique hotels, comfortable private transit, breakfast included.',
+                        priceLabel: 'Best Value',
                       },
                       {
                         id: 'comfort',
                         name: 'Premium Comfort',
-                        desc: '4-Star luxury resorts, dedicated private AC Innova, gourmet buffet breakfasts.',
+                        desc: '4-Star luxury resorts, dedicated private AC Innova/coach, gourmet buffet meals.',
                         priceLabel: 'Most Popular',
                         recommended: true,
                       },
                       {
                         id: 'luxury',
                         name: 'Royal 5-Star Luxury',
-                        desc: 'Palace suites, heritage villas, private boat charters, luxury chauffeur service.',
+                        desc: 'Palace suites, heritage villas, private boat charters, dedicated chauffeur service.',
                         priceLabel: 'Ultimate Experience',
                       },
                     ].map((tier) => (
@@ -316,20 +308,20 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                         onClick={() => setBudgetTier(tier.id as any)}
                         className={`p-5 rounded-2xl border cursor-pointer transition-all ${
                           budgetTier === tier.id
-                            ? 'bg-slate-50 border-black shadow-md'
-                            : 'bg-white border-slate-200 hover:border-slate-300'
+                            ? 'bg-zinc-900 border-[#ED1D24] shadow-lg shadow-red-900/20'
+                            : 'bg-zinc-900/50 border-white/10 hover:border-white/20'
                         }`}
                       >
                         {tier.recommended && (
-                          <span className="px-2.5 py-0.5 rounded-full bg-brand-gold text-white font-serif font-bold text-[10px] mb-2 inline-block">
+                          <span className="px-2.5 py-0.5 rounded-full bg-[#ED1D24] text-white font-mono font-bold text-[10px] mb-2 inline-block">
                             RECOMMENDED
                           </span>
                         )}
-                        <h4 className="font-serif text-base font-bold text-black mb-1">{tier.name}</h4>
-                        <span className="text-xs font-bold text-brand-gold block mb-2">
+                        <h4 className="font-serif text-base font-bold text-white mb-1">{tier.name}</h4>
+                        <span className="text-xs font-bold text-amber-400 block mb-2 font-mono">
                           {tier.priceLabel}
                         </span>
-                        <p className="text-xs text-gray-600 leading-relaxed">{tier.desc}</p>
+                        <p className="text-xs text-zinc-400 leading-relaxed">{tier.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -337,13 +329,13 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={() => setStep(2)}
-                      className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-black font-serif font-bold text-sm"
+                      className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-serif font-bold text-sm"
                     >
                       Back
                     </button>
                     <button
                       onClick={() => setStep(4)}
-                      className="px-6 py-3 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-sm"
+                      className="px-6 py-3 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-md"
                     >
                       <span>Continue to Interests</span>
                       <ArrowRight className="w-4 h-4" />
@@ -355,10 +347,10 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
               {/* Step 4: Interests */}
               {step === 4 && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h3 className="font-serif text-xl font-bold text-black mb-2">
+                  <h3 className="font-serif text-xl font-bold text-white mb-2">
                     4. Select Your Travel Interests
                   </h3>
-                  <p className="text-xs text-gray-600 mb-4">
+                  <p className="text-xs text-zinc-400 mb-4">
                     Select what excites you the most so we customize your daily activity highlights.
                   </p>
 
@@ -369,8 +361,8 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                         onClick={() => toggleInterest(interest)}
                         className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-serif font-bold transition-all ${
                           interests.includes(interest)
-                            ? 'bg-black text-white shadow-sm'
-                            : 'bg-slate-50 border border-slate-200 text-gray-800 hover:border-black'
+                            ? 'bg-[#ED1D24] text-white shadow-md'
+                            : 'bg-zinc-900 border border-white/10 text-zinc-300 hover:border-white/30'
                         }`}
                       >
                         {interest}
@@ -378,18 +370,18 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                     ))}
                   </div>
 
-                  <div className="flex justify-between pt-6 border-t border-slate-100">
+                  <div className="flex justify-between pt-6 border-t border-white/10">
                     <button
                       onClick={() => setStep(3)}
-                      className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-black font-serif font-bold text-sm"
+                      className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-serif font-bold text-sm"
                     >
                       Back
                     </button>
                     <button
                       onClick={handleGenerate}
-                      className="px-8 py-3.5 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-md transition-all"
+                      className="px-8 py-3.5 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-sm flex items-center gap-2 shadow-lg shadow-red-900/40 transition-all hover:scale-105"
                     >
-                      <Sparkles className="w-4 h-4 text-brand-gold" />
+                      <Sparkles className="w-4 h-4 text-amber-300" />
                       <span>Generate Custom Itinerary</span>
                     </button>
                   </div>
@@ -399,25 +391,25 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
           ) : (
             /* Generated Itinerary Output */
             <div className="animate-in fade-in duration-500 space-y-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-serif font-bold text-xs uppercase tracking-wider mb-2 inline-block">
+                  <span className="px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 font-mono font-bold text-xs uppercase tracking-wider mb-2 inline-block border border-emerald-500/30">
                     ✓ Custom Plan Ready
                   </span>
-                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-black">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
                     {generatedItinerary.durationDays}-Day Bespoke {generatedItinerary.destObj.name} Explorer
                   </h3>
-                  <p className="text-gray-600 text-xs sm:text-sm mt-1">
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-1">
                     Departing from {generatedItinerary.startCity} for {generatedItinerary.travelersCount} Travellers ({generatedItinerary.travelType})
                   </p>
                 </div>
 
-                <div className="text-left sm:text-right p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                  <span className="text-xs text-gray-500 block">Estimated Cost / Person</span>
-                  <span className="font-serif text-2xl sm:text-3xl font-bold text-black">
+                <div className="text-left sm:text-right p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                  <span className="text-xs text-zinc-400 block font-mono">Estimated Cost / Person</span>
+                  <span className="font-serif text-2xl sm:text-3xl font-bold text-white">
                     ₹{generatedItinerary.costPerPerson.toLocaleString('en-IN')}
                   </span>
-                  <span className="text-[11px] text-gray-600 block">
+                  <span className="text-[11px] text-zinc-400 block">
                     Total: ₹{generatedItinerary.totalCost.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -428,17 +420,17 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
                 {generatedItinerary.days.map((d: any) => (
                   <div
                     key={d.day}
-                    className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200"
+                    className="p-4 sm:p-5 rounded-2xl bg-zinc-900/80 border border-white/10"
                   >
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="px-3 py-1 rounded-full bg-black text-white font-serif font-bold text-xs">
+                      <span className="px-3 py-1 rounded-full bg-[#ED1D24] text-white font-serif font-bold text-xs">
                         Day {d.day}
                       </span>
-                      <h4 className="font-serif text-base sm:text-lg font-bold text-black">
+                      <h4 className="font-serif text-base sm:text-lg font-bold text-white">
                         {d.title}
                       </h4>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-700 pl-2 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-zinc-300 pl-2 leading-relaxed">
                       {d.desc}
                     </p>
                   </div>
@@ -446,22 +438,31 @@ export const SmartTripPlanner: React.FC<SmartTripPlannerProps> = ({ onBookCustom
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-200">
+              <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-white/10">
                 <button
                   onClick={() =>
                     onBookCustomItinerary(
                       `${generatedItinerary.durationDays}-Day custom trip to ${generatedItinerary.destObj.name} from ${generatedItinerary.startCity} for ${generatedItinerary.travelersCount} people.`
                     )
                   }
-                  className="flex-1 py-3.5 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-sm flex items-center justify-center gap-2 shadow-md"
+                  className="flex-1 py-3.5 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-red-900/30"
                 >
                   <span>Book This Custom Plan</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
+                <a
+                  href={`https://wa.me/917867818790?text=Hi%20Marvel%20Holidays,%20I%20generated%20a%20${generatedItinerary.durationDays}-Day%20itinerary%20for%20${encodeURIComponent(generatedItinerary.destObj.name)}.%20Please%20share%20booking%20details.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3.5 px-6 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-serif font-bold text-sm flex items-center justify-center gap-2"
+                >
+                  <span>WhatsApp: 7867818790</span>
+                </a>
+
                 <button
                   onClick={() => setGeneratedItinerary(null)}
-                  className="py-3.5 px-6 rounded-xl bg-slate-100 hover:bg-slate-200 text-black font-serif font-bold text-sm flex items-center justify-center gap-2"
+                  className="py-3.5 px-6 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-serif font-bold text-sm flex items-center justify-center gap-2"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Modify Plan</span>

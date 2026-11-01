@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Compass, Sparkles } from 'lucide-react';
+import { Sparkles, Heart } from 'lucide-react';
+import { MarvelLogo } from './MarvelLogo';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -18,50 +19,43 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           setTimeout(() => onComplete(), 700);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 10) + 5;
+        return prev + Math.floor(Math.random() * 10) + 6;
       });
-    }, 60);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [onComplete]);
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white transition-opacity duration-700 ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050507] text-white transition-opacity duration-700 ${
         fade ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       <div className="relative z-10 flex flex-col items-center">
-        <div className="relative mb-6">
-          <div className="w-24 h-24 rounded-full border-2 border-brand-gold p-2 relative flex items-center justify-center bg-white shadow-luxury">
-            <div className="w-full h-full rounded-full border border-black border-dashed animate-spin-slow flex items-center justify-center">
-              <Compass className="w-10 h-10 text-brand-gold" />
-            </div>
-            <Sparkles className="w-4 h-4 text-black absolute -top-1 -right-1" />
-          </div>
+        {/* Official Marvel Logo */}
+        <div className="mb-6 transform hover:scale-105 transition-transform">
+          <MarvelLogo size="xl" />
         </div>
 
-        {/* Brand Name Typography in Times New Roman Black */}
-        <h1 className="font-serif text-3xl sm:text-4xl tracking-[0.25em] font-black text-black mb-1">
-          MARVEL
-        </h1>
-        <p className="font-serif text-sm tracking-[0.45em] text-brand-gold font-bold mb-6">
-          HOLIDAYS
-        </p>
-
-        {/* Tagline */}
-        <p className="text-gray-500 font-serif text-xs sm:text-sm tracking-widest uppercase mb-8">
-          Discover India • Experience Wonder
+        {/* Tagline from Brand Profile */}
+        <p className="text-amber-400 font-mono text-xs sm:text-sm tracking-wider uppercase mb-8 flex items-center gap-1.5">
+          <span>Assemble Your Next Adventure</span>
+          <Heart className="w-3.5 h-3.5 fill-[#ED1D24] text-[#ED1D24]" />
         </p>
 
         {/* Progress Bar */}
-        <div className="w-64 h-1.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200 p-0.5 relative">
+        <div className="w-64 h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/15 p-0.5 relative">
           <div
-            className="h-full bg-black rounded-full transition-all duration-150"
+            className="h-full bg-[#ED1D24] rounded-full transition-all duration-150 shadow-[0_0_10px_#ED1D24]"
             style={{ width: `${Math.min(progress, 100)}%` }}
           />
         </div>
-        <span className="text-xs font-mono font-bold text-black mt-3">{Math.min(progress, 100)}%</span>
+
+        <div className="mt-3 flex items-center justify-between w-64 text-[11px] font-mono text-zinc-500">
+          <span>Tours & Travels</span>
+          <span>{Math.min(progress, 100)}%</span>
+        </div>
       </div>
     </div>
   );

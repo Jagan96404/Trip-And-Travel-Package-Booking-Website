@@ -70,17 +70,17 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 relative selection:bg-brand-gold selection:text-white">
+    <div className="min-h-screen bg-[#050507] text-white relative selection:bg-[#ED1D24] selection:text-white">
       {/* 1. Brand Loading Intro Screen */}
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
 
-      {/* 2. Navigation Bar */}
+      {/* 2. Navigation Bar with Marvel Logo & Direct Contact Bar */}
       <Navbar
         onOpenTripPlanner={() => scrollTo('planner')}
         onOpenBooking={() => scrollTo('contact')}
       />
 
-      {/* 3. Hero Section with 3D Earth Globe & Animated Airplane */}
+      {/* 3. Hero Section with Luxury Tour Hub & Brand Profile */}
       <HeroSection
         onExploreDestinations={() => scrollTo('destinations')}
         onDiscoverPackages={() => scrollTo('packages')}
@@ -102,7 +102,7 @@ export const App: React.FC = () => {
       {/* 7. Smart Trip Planner */}
       <SmartTripPlanner onBookCustomItinerary={handleBookNow} />
 
-      {/* 8. Interactive Real India & World Map with Zoom In / Out & Satellite View */}
+      {/* 8. Interactive Real India & World Map with Dark Street & Satellite View */}
       <InteractiveMap onSelectDestination={handleSelectMapDestination} />
 
       {/* 9. Travel Experiences Section */}
@@ -120,7 +120,7 @@ export const App: React.FC = () => {
       {/* 13. Customer Reviews & Ratings */}
       <TestimonialsSection />
 
-      {/* 14. Contact & Booking Form with Google Maps & Validation */}
+      {/* 14. Contact & Booking Form with Direct WhatsApp & Instagram */}
       <ContactBookingSection initialDestination={bookingDestination} />
 
       {/* 15. Comprehensive Footer */}
@@ -132,21 +132,21 @@ export const App: React.FC = () => {
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             aria-label="Scroll to top"
-            className="w-11 h-11 rounded-full bg-white border border-slate-300 text-black hover:bg-slate-100 flex items-center justify-center shadow-luxury transition-all hover:scale-105"
+            className="w-11 h-11 rounded-full bg-zinc-900 border border-white/20 text-white hover:bg-zinc-800 flex items-center justify-center shadow-2xl transition-all hover:scale-105"
           >
             <ArrowUp className="w-5 h-5" />
           </button>
         )}
 
         <a
-          href="https://wa.me/919876543210?text=Hello%20Marvel%20Holidays!%20I%20would%20like%20to%20plan%20a%20trip."
+          href="https://wa.me/917867818790?text=Hello%20Marvel%20Holidays!%20I%20would%20like%20to%20plan%20a%20trip."
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp Inquiry"
-          className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-serif font-bold text-xs sm:text-sm shadow-luxury hover:scale-105 transition-all group"
+          className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-serif font-bold text-xs sm:text-sm shadow-2xl hover:scale-105 transition-all group"
         >
           <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-          <span className="hidden sm:inline">Chat with Travel Expert</span>
+          <span className="hidden sm:inline">WhatsApp: 7867818790</span>
         </a>
       </div>
     </div>

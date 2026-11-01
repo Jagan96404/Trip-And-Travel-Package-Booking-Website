@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HOLIDAY_PACKAGES } from '../data/packages';
 import { HolidayPackage, PackageCategory } from '../types';
 import { PackageModal } from './PackageModal';
-import { Clock, Star, ArrowRight, Check, Sparkles, MapPin, Info, Image as ImageIcon } from 'lucide-react';
+import { Clock, Star, ArrowRight, Check, Sparkles, MapPin, Info, Phone } from 'lucide-react';
 
 interface PackagesSectionProps {
   onBookNow: (packageTitle: string) => void;
@@ -29,25 +29,25 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
   });
 
   return (
-    <section id="packages" className="py-20 bg-slate-50 border-t border-b border-slate-200">
+    <section id="packages" className="py-24 bg-[#08080c] text-white border-t border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-bold font-serif uppercase tracking-widest text-brand-gold block mb-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-400 block mb-2">
             Signature Itineraries & Real Photography
           </span>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
-            Holiday Packages
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+            Curated Holiday Packages
           </h2>
 
-          <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-            Curated by destination connoisseurs. Each package includes handpicked luxury stays, chauffeured private transit, authentic experiences, and real photography of every place covered.
+          <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+            Crafted for unforgettable memories. Handpicked luxury stays, private chauffeured transit, expert coordinators, and authentic real photography of every place covered.
           </p>
 
-          <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-gray-600 text-xs shadow-sm">
-            <Info className="w-3.5 h-3.5 text-brand-gold" />
-            <span>Sample package rates shown for demonstration. Custom flight & hotel options tailored on inquiry.</span>
+          <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-white/10 text-zinc-400 text-xs shadow-sm">
+            <Info className="w-3.5 h-3.5 text-amber-400" />
+            <span>School, College IV & Corporate group bookings available with custom bus & permissions.</span>
           </div>
         </div>
 
@@ -57,11 +57,10 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-serif font-bold transition-all duration-200 ${
-                activeCategory === cat
-                  ? 'bg-black text-white shadow-sm'
-                  : 'bg-white text-gray-700 hover:text-black hover:bg-slate-100 border border-slate-200'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-serif font-bold transition-all duration-200 ${activeCategory === cat
+                  ? 'bg-[#ED1D24] text-white shadow-md'
+                  : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-white/10'
+                }`}
             >
               {cat}
             </button>
@@ -73,7 +72,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
           {filteredPackages.map((pkg) => (
             <div
               key={pkg.id}
-              className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-luxury white-card-hover flex flex-col justify-between"
+              className="group bg-[#0d0d14] rounded-3xl overflow-hidden border border-white/10 shadow-2xl hover:border-white/25 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 {/* Main Featured Photo */}
@@ -84,35 +83,35 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
 
                   {/* Category Pill */}
-                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-brand-gold text-white text-[11px] font-serif font-bold">
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#ED1D24] text-white text-[10px] font-mono font-bold tracking-wider uppercase">
                     {pkg.category}
                   </span>
 
                   {/* Rating Badge */}
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/95 text-black flex items-center gap-1 text-[11px] font-bold shadow-sm">
+                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-white flex items-center gap-1 text-[11px] font-bold border border-white/10">
                     <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                     <span>{pkg.rating}</span>
                   </div>
 
                   {/* Duration Pill */}
-                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-lg bg-white/95 text-black font-semibold flex items-center gap-1.5 text-xs shadow-sm">
-                    <Clock className="w-3.5 h-3.5 text-brand-gold" />
+                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-lg bg-black/85 backdrop-blur-md text-zinc-200 font-semibold flex items-center gap-1.5 text-xs border border-white/10">
+                    <Clock className="w-3.5 h-3.5 text-amber-400" />
                     <span>{pkg.duration.days} Days / {pkg.duration.nights} Nights</span>
                   </div>
                 </div>
 
                 {/* Card Body */}
                 <div className="p-6">
-                  <h3 className="font-serif text-xl font-bold text-black group-hover:text-brand-gold transition-colors mb-2 leading-snug">
+                  <h3 className="font-serif text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2 leading-snug">
                     {pkg.title}
                   </h3>
 
                   {/* Places Covered with Real Thumbnail Images */}
                   <div className="mb-4">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500 block mb-2">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-400 block mb-2">
                       Places Covered ({pkg.placesCovered.length} Sights):
                     </span>
                     <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
@@ -121,14 +120,14 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
                             <div
                               key={idx}
                               title={`${place.name}: ${place.description}`}
-                              className="shrink-0 flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200"
+                              className="shrink-0 flex items-center gap-1.5 px-2 py-1 rounded-lg bg-zinc-900 border border-white/10"
                             >
                               <img
                                 src={place.image}
                                 alt={place.name}
                                 className="w-5 h-5 rounded-md object-cover"
                               />
-                              <span className="text-[11px] font-serif font-bold text-black whitespace-nowrap">
+                              <span className="text-[11px] font-serif font-bold text-zinc-200 whitespace-nowrap">
                                 {place.name}
                               </span>
                             </div>
@@ -136,7 +135,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
                         : pkg.placesCovered.map((place, idx) => (
                             <span
                               key={idx}
-                              className="text-xs font-serif font-bold text-black px-2 py-0.5 bg-slate-100 rounded-md whitespace-nowrap"
+                              className="text-xs font-serif font-bold text-zinc-200 px-2 py-0.5 bg-zinc-900 rounded-md whitespace-nowrap border border-white/10"
                             >
                               📍 {place}
                             </span>
@@ -145,10 +144,10 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
                   </div>
 
                   {/* Inclusions highlights */}
-                  <div className="space-y-1.5 mb-6 pt-3 border-t border-slate-100">
+                  <div className="space-y-1.5 mb-6 pt-3 border-t border-white/10">
                     {pkg.inclusions.slice(0, 3).map((inc, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-gray-700">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <div key={i} className="flex items-center gap-2 text-xs text-zinc-300">
+                        <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                         <span className="truncate">{inc}</span>
                       </div>
                     ))}
@@ -158,38 +157,43 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
 
               {/* Price & Action Buttons */}
               <div className="p-6 pt-0">
-                <div className="flex items-baseline justify-between mb-4">
+                <div className="flex items-baseline justify-between mb-4 pt-3 border-t border-white/10">
                   <div>
-                    <span className="text-[11px] text-gray-500 block">Starting From</span>
+                    <span className="text-[10px] text-zinc-400 uppercase tracking-wider block font-semibold">
+                      Starting Per Person
+                    </span>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-serif text-2xl font-bold text-black">
+                      <span className="font-serif text-2xl font-bold text-white">
                         ₹{pkg.pricePerPerson.toLocaleString('en-IN')}
                       </span>
                       {pkg.originalPrice && (
-                        <span className="text-xs text-gray-400 line-through">
+                        <span className="text-xs text-zinc-500 line-through">
                           ₹{pkg.originalPrice.toLocaleString('en-IN')}
                         </span>
                       )}
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500">/ person</span>
+                  <span className="text-[11px] font-mono text-emerald-400 font-semibold bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                    {pkg.badge || 'Best Seller'}
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setSelectedPackage(pkg)}
-                    className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-black font-serif font-bold text-xs transition-colors text-center"
+                    className="py-2.5 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-serif font-bold text-xs flex items-center justify-center gap-1 border border-white/15 transition-all"
                   >
-                    View Details
+                    <span>View Details</span>
                   </button>
 
-                  <button
-                    onClick={() => onBookNow(pkg.title)}
-                    className="py-2.5 px-3 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1"
+                  <a
+                    href={`https://wa.me/917867818790?text=Hi%20Marvel%20Holidays!%20I%20want%20to%20book%20the%20package:%20${encodeURIComponent(pkg.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2.5 px-3 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-xs flex items-center justify-center gap-1 shadow-md transition-all active:scale-95"
                   >
-                    <span>Book Now</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                    <span>Book: 7867818790</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -199,7 +203,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onBookNow }) =
 
       {/* Package Detail Modal */}
       <PackageModal
-        packageData={selectedPackage}
+        pkg={selectedPackage}
         onClose={() => setSelectedPackage(null)}
         onBookNow={onBookNow}
       />

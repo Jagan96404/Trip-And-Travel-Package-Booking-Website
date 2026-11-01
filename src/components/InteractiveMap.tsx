@@ -31,9 +31,9 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
 
     mapInstanceRef.current = map;
 
-    // Default tile layer: CartoDB Positron (clean white luxury business map)
-    const streetsLayer = L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    // Default tile layer: CartoDB Dark Matter for Black Luxury Theme
+    const darkLayer = L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
       {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -41,9 +41,9 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
       }
     ).addTo(map);
 
-    tileLayerRef.current = streetsLayer;
+    tileLayerRef.current = darkLayer;
 
-    // Create custom luxury pin icon
+    // Create custom dark luxury pin icon
     const createCustomIcon = (name: string, price: number) => {
       return L.divIcon({
         className: 'custom-leaflet-marker',
@@ -51,12 +51,12 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
           <div style="
             display: flex;
             align-items: center;
-            background: #ffffff;
-            color: #000000;
-            border: 2px solid #b48a3c;
+            background: #09090b;
+            color: #ffffff;
+            border: 2px solid #ED1D24;
             border-radius: 9999px;
             padding: 3px 8px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.6);
             font-family: 'Times New Roman', serif;
             font-size: 11px;
             font-weight: 700;
@@ -64,9 +64,9 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
             cursor: pointer;
             transform: translate(-50%, -50%);
           ">
-            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#b48a3c; margin-right:5px;"></span>
+            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#ED1D24; margin-right:5px; box-shadow:0 0 6px #ED1D24;"></span>
             <span>${name}</span>
-            <span style="margin-left:4px; color:#8c6b2d; font-size:10px;">₹${(price / 1000).toFixed(0)}k</span>
+            <span style="margin-left:4px; color:#fbbf24; font-size:10px;">₹${(price / 1000).toFixed(0)}k</span>
           </div>
         `,
         iconSize: [80, 24],
@@ -84,20 +84,20 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
       const popupContent = document.createElement('div');
       popupContent.style.width = '240px';
       popupContent.innerHTML = `
-        <div style="overflow:hidden; border-radius:12px; font-family:'Plus Jakarta Sans', sans-serif;">
+        <div style="overflow:hidden; border-radius:12px; font-family:'Plus Jakarta Sans', sans-serif; background:#0d0d14; color:#ffffff;">
           <img src="${dest.image}" alt="${dest.name}" style="width:100%; height:120px; object-fit:cover;" />
-          <div style="padding:12px; background:#ffffff;">
-            <div style="font-family:'Times New Roman', Times, serif; font-size:16px; font-weight:800; color:#000000; margin-bottom:2px;">
+          <div style="padding:12px; background:#0d0d14;">
+            <div style="font-family:'Times New Roman', Times, serif; font-size:16px; font-weight:800; color:#ffffff; margin-bottom:2px;">
               ${dest.name}
             </div>
-            <div style="font-size:11px; color:#64748b; margin-bottom:8px;">${dest.state} • ${dest.region}</div>
+            <div style="font-size:11px; color:#a1a1aa; margin-bottom:8px;">${dest.state} • ${dest.region}</div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
-              <span style="font-size:10px; color:#94a3b8;">Starting From</span>
-              <span style="font-family:'Times New Roman', serif; font-size:16px; font-weight:800; color:#b48a3c;">₹${dest.startingPrice.toLocaleString('en-IN')}</span>
+              <span style="font-size:10px; color:#71717a;">Starting From</span>
+              <span style="font-family:'Times New Roman', serif; font-size:16px; font-weight:800; color:#fbbf24;">₹${dest.startingPrice.toLocaleString('en-IN')}</span>
             </div>
             <button id="book-btn-${dest.id}" style="
               width:100%;
-              background:#000000;
+              background:#ED1D24;
               color:#ffffff;
               border:none;
               padding:8px 0;
@@ -153,9 +153,9 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
         }
       ).addTo(mapInstanceRef.current);
     } else {
-      // Clean Light Business Map
+      // Dark Luxury Street Map
       tileLayerRef.current = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
         {
           attribution: '&copy; OpenStreetMap &copy; CARTO',
           subdomains: 'abcd',
@@ -174,56 +174,59 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
   };
 
   const handleReset = () => {
-    mapInstanceRef.current?.setView([22.9734, 78.6569], 5);
+    mapInstanceRef.current?.setView([22.9734, 78.6569], 5, { animate: true });
   };
 
   const jumpToDestination = (dest: Destination) => {
     setSelectedDest(dest);
-    mapInstanceRef.current?.setView([dest.coordinates.lat, dest.coordinates.lng], 9, {
-      animate: true,
+    mapInstanceRef.current?.flyTo([dest.coordinates.lat, dest.coordinates.lng], 8, {
+      duration: 1.5,
     });
   };
 
   return (
-    <section id="interactive-map" className="py-20 bg-slate-50 border-t border-b border-slate-200">
+    <section id="interactive-map" className="py-24 bg-[#050507] text-white border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-gold block mb-2">
-            Real Interactive Exploration
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
-            Interactive Map of India & World Destinations
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-amber-400 mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Pan, Zoom & Explore Sights</span>
+          </div>
+
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+            Interactive India Explorer Map
           </h2>
-          <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-            Zoom in or out to explore authentic geographic terrain and satellite imagery. Click on any destination to view real photographs, season highlights, and pricing.
+
+          <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+            Zoom in, switch between dark street and satellite imagery, and discover places across North, South, East, and West India with real photography and package details.
           </p>
         </div>
 
         {/* Map Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Real Leaflet Map Container */}
-          <div className="lg:col-span-8 bg-white p-3 rounded-3xl shadow-luxury border border-slate-200 relative">
+          <div className="lg:col-span-8 bg-[#0d0d14] p-3 rounded-3xl shadow-2xl border border-white/10 relative">
             {/* Map Controls Header */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3 mb-2 bg-slate-100 rounded-2xl border border-slate-200">
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3 mb-2 bg-zinc-900/90 rounded-2xl border border-white/10">
               {/* Layer switch buttons */}
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => toggleMapLayer('streets')}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     mapStyle === 'streets'
-                      ? 'bg-black text-white shadow-sm'
-                      : 'bg-white text-gray-700 hover:text-black'
+                      ? 'bg-[#ED1D24] text-white shadow-md'
+                      : 'bg-zinc-800 text-zinc-400 hover:text-white'
                   }`}
                 >
-                  Clean Street Map
+                  Dark Street Map
                 </button>
                 <button
                   onClick={() => toggleMapLayer('satellite')}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     mapStyle === 'satellite'
-                      ? 'bg-black text-white shadow-sm'
-                      : 'bg-white text-gray-700 hover:text-black'
+                      ? 'bg-[#ED1D24] text-white shadow-md'
+                      : 'bg-zinc-800 text-zinc-400 hover:text-white'
                   }`}
                 >
                   Real Satellite View
@@ -235,21 +238,21 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
                 <button
                   onClick={handleZoomIn}
                   title="Zoom In"
-                  className="w-8 h-8 rounded-xl bg-white border border-slate-200 text-black hover:bg-slate-200 flex items-center justify-center font-bold"
+                  className="w-8 h-8 rounded-xl bg-zinc-800 border border-white/10 text-white hover:bg-zinc-700 flex items-center justify-center font-bold"
                 >
                   <ZoomIn className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleZoomOut}
                   title="Zoom Out"
-                  className="w-8 h-8 rounded-xl bg-white border border-slate-200 text-black hover:bg-slate-200 flex items-center justify-center font-bold"
+                  className="w-8 h-8 rounded-xl bg-zinc-800 border border-white/10 text-white hover:bg-zinc-700 flex items-center justify-center font-bold"
                 >
                   <ZoomOut className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleReset}
                   title="Reset to India View"
-                  className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-gray-700 hover:text-black flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-xl bg-zinc-800 border border-white/10 text-xs font-semibold text-zinc-300 hover:text-white flex items-center gap-1.5"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Center India</span>
@@ -260,12 +263,12 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
             {/* Real Interactive Map Canvas */}
             <div
               ref={mapContainerRef}
-              className="w-full h-[520px] rounded-2xl overflow-hidden border border-slate-200 z-10"
+              className="w-full h-[520px] rounded-2xl overflow-hidden border border-white/10 z-10"
             />
 
             {/* Quick jump pills */}
             <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider shrink-0">
+              <span className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider shrink-0">
                 Quick Jump:
               </span>
               {DESTINATIONS.slice(0, 10).map((d) => (
@@ -274,8 +277,8 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
                   onClick={() => jumpToDestination(d)}
                   className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 transition-colors ${
                     selectedDest.id === d.id
-                      ? 'bg-brand-gold text-white font-bold'
-                      : 'bg-slate-100 text-gray-800 hover:bg-slate-200'
+                      ? 'bg-[#ED1D24] text-white font-bold'
+                      : 'bg-zinc-900 text-zinc-300 hover:bg-zinc-800 border border-white/10'
                   }`}
                 >
                   {d.name}
@@ -285,7 +288,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
           </div>
 
           {/* Right Spotlight Card */}
-          <div className="lg:col-span-4 bg-white rounded-3xl p-6 shadow-luxury border border-slate-200">
+          <div className="lg:col-span-4 bg-[#0d0d14] rounded-3xl p-6 shadow-2xl border border-white/10">
             <div className="relative h-60 -mx-6 -mt-6 mb-5 overflow-hidden rounded-t-3xl">
               <img
                 src={selectedDest.image}
@@ -293,46 +296,46 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
                 className="w-full h-full object-cover"
               />
               <div className="absolute top-4 left-4 flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider">
+                <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-white text-xs font-mono font-bold uppercase tracking-wider border border-white/15">
                   {selectedDest.region}
                 </span>
-                <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-black text-xs font-bold">
+                <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/15">
                   {selectedDest.state}
                 </span>
               </div>
             </div>
 
-            <h3 className="font-serif text-2xl font-bold text-black mb-1">
+            <h3 className="font-serif text-2xl font-bold text-white mb-1">
               {selectedDest.name}
             </h3>
-            <p className="text-brand-gold text-xs font-bold uppercase tracking-wider mb-3">
+            <p className="text-amber-400 text-xs font-bold uppercase tracking-wider mb-3 font-mono">
               {selectedDest.tagline}
             </p>
 
-            <p className="text-gray-700 text-xs sm:text-sm leading-relaxed mb-5">
+            <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-5">
               {selectedDest.description}
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mb-5 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+            <div className="grid grid-cols-2 gap-3 mb-5 p-3.5 bg-zinc-900/80 rounded-2xl border border-white/10">
               <div>
-                <span className="text-[10px] uppercase font-bold text-gray-500 block">Best Season</span>
-                <span className="text-xs font-bold text-black truncate block">{selectedDest.bestTime}</span>
+                <span className="text-[10px] uppercase font-bold text-zinc-400 block font-mono">Best Season</span>
+                <span className="text-xs font-bold text-white truncate block">{selectedDest.bestTime}</span>
               </div>
               <div className="text-right">
-                <span className="text-[10px] uppercase font-bold text-gray-500 block">Starting At</span>
-                <span className="font-serif text-lg font-bold text-black">
+                <span className="text-[10px] uppercase font-bold text-zinc-400 block font-mono">Starting At</span>
+                <span className="font-serif text-lg font-bold text-amber-400">
                   ₹{selectedDest.startingPrice.toLocaleString('en-IN')}
                 </span>
               </div>
             </div>
 
             <div className="space-y-1.5 mb-6">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500 block">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">
                 Top Highlights
               </span>
               {selectedDest.highlights.slice(0, 3).map((h, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs text-gray-800">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                <div key={i} className="flex items-center gap-2 text-xs text-zinc-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                   <span>{h}</span>
                 </div>
               ))}
@@ -340,7 +343,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
 
             <button
               onClick={() => onSelectDestination(selectedDest)}
-              className="w-full py-3.5 px-4 rounded-xl bg-black hover:bg-gray-800 text-white font-serif font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-md"
+              className="w-full py-3.5 px-4 rounded-xl bg-[#ED1D24] hover:bg-red-700 text-white font-serif font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-red-900/30"
             >
               <span>Book Trip to {selectedDest.name}</span>
               <ArrowRight className="w-4 h-4" />
@@ -349,5 +352,8 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectDestinat
         </div>
       </div>
     </section>
+  );
+};
+    </section >
   );
 };
