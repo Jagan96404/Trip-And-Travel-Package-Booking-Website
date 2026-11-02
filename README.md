@@ -3,7 +3,7 @@
 # 🌟 MARVEL HOLIDAYS
 ### *Assemble Your Next Adventure ❤️‍🔥*
 
-[![Live Website](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-ED1D24?style=for-the-badge&logo=github&logoColor=white)](https://jagan96404.github.io/Trip-and-Travel-Packing-Website/)
+[![Live Website](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-ED1D24?style=for-the-badge&logo=github&logoColor=white)](https://jagan96404.github.io/Marvel-Holidays/)
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -291,8 +291,8 @@ Marvel Holidays/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Jagan96404/Trip-and-Travel-Packing-Website.git
-cd Trip-and-Travel-Packing-Website
+git clone https://github.com/Jagan96404/Marvel-Holidays.git
+cd Marvel-Holidays
 ```
 
 ### 2. Install Dependencies
